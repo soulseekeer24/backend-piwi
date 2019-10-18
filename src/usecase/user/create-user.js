@@ -1,10 +1,30 @@
 
-export default function makeCreateUser({ buildUser, userRepository, passwordEncoder, logger }) {
+export default function makeCreateUser({ idGenerator, User, userRepository, passwordEncoder, logger }) {
     return async function createUser({
         username,
         password
     }) {
         try {
+            if (idGenerator == null || idGenerator == undefined) {
+                throw new Error(`idGenerator is required`);
+            }
+            if (User == null || User == undefined) {
+                throw new Error(`User function is required`);
+            }
+            if (userRepository == null || userRepository == undefined) {
+                throw new Error(`User Repository  is required`);
+            }
+            if (passwordEncoder == null || passwordEncoder == undefined) {
+                throw new Error(`passwordEncoder  is required`);
+            }
+            if (logger == null || logger == undefined) {
+                throw new Error(`logger is required`);
+            }
+
+
+
+
+
             const userAlreadyExist = await userRepository.existByUsername(username);
 
             if (userAlreadyExist) {
@@ -13,9 +33,11 @@ export default function makeCreateUser({ buildUser, userRepository, passwordEnco
 
             const encodedPassword = await passwordEncoder.encode(password);
 
-            const newUser = await buildUser({
+            const newUser = await User({
+                id: idGenerator.generateID(),
                 username: username,
-                password: encodedPassword
+                password: encodedPassword,
+                createdAt: new Date()
             });
 
             const userStored = await userRepository.persist(newUser);
@@ -26,7 +48,6 @@ export default function makeCreateUser({ buildUser, userRepository, passwordEnco
 
         } catch (e) {
             logger.error(e.message);
-            //TODO: error utility
             return { error: e };
         }
     }

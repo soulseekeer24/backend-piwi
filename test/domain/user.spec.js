@@ -1,43 +1,53 @@
 import { assert } from 'chai';
-import makeUser from '../../src/domain/user/user';
+import makeCreateUser from '../../src/domain/user/user';
 
-describe('User domain', () => {
-    let userOf;
-    let userId = new Date().getMilliseconds();
-
-    it('Should  create a user factory', () => {
-        const idGenerator = {
-            generateID: () => {
-                return userId;
-            }
-        };
+describe('Create user function', () => {
+    let CreateUser;
+    const userId = new Date().getMilliseconds();
+    const userTestName = 'testUser';
+    const userTestPassword = 'testPassword';
+    const creationDate = new Date();
+    it('Should  create a user factory function', () => {
         const userValidator = {
             isValid: () => {
                 return true;
             }
         }
-        userOf = makeUser({
-            idGenerator: idGenerator,
+        CreateUser = makeCreateUser({
             userValidator: userValidator
         });
-
-        assert.isFunction(userOf, 'factory created');
-
+        assert.isFunction(CreateUser, 'factory created');
     });
-
+    let userCreated;
     it('Should create a User frozen', async () => {
         const user = {
-            username: 'testuser',
-            password: 'passtest',
-            createdAt: new Date()
+            id: userId,
+            username: userTestName,
+            password: userTestPassword,
+            createdAt: creationDate
         };
 
-        const userCreated = await userOf(user);
-
-        assert.notTypeOf(userCreated, 'promise');
+        userCreated = await CreateUser(user);
         assert.isFrozen(userCreated, 'factory created');
-        assert.equal(userCreated.username, 'testuser');
-        assert.equal(userCreated.password, 'passtest');
-        assert.isNotNull(userCreated.id, userId);
+    });
+
+    it('User should not be of type promise', () => {
+        assert.notTypeOf(userCreated, 'promise');
+    });
+
+    it(`User.username should be ${userTestName}`, () => {
+        assert.equal(userCreated.username, userTestName);
+    });
+
+    it(`User.password should be ${userTestPassword}`, () => {
+        assert.equal(userCreated.password, userTestPassword);
+    });
+
+    it(`User.id should be ${userId}`, () => {
+        assert.equal(userCreated.id, userId);
+    });
+
+    it(`User.createdAt should be ${creationDate}`, () => {
+        assert.equal(userCreated.createdAt, creationDate);
     });
 });
