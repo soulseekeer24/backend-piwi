@@ -18,7 +18,9 @@ describe('Create user function', () => {
         });
         assert.isFunction(CreateUser, 'factory created');
     });
+
     let userCreated;
+
     it('Should create a User frozen', async () => {
         const user = {
             id: userId,
