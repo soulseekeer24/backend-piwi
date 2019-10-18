@@ -44,7 +44,7 @@ function setUp() {
     }
 }
 
-describe('Create Register User function', async () => {
+describe('Register User function', async () => {
     const registerUser = makeRegisterUser(setUp());
 
     it('Should create a register user function', () => {
