@@ -1,12 +1,13 @@
 
 import  express  from'express';
-import  moongose from './db/';
+import  authService from './services/auth.services';
 
 const app = express();
 app.use(express.json());
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+app.post('/create-user', async function (req, res) {
+  const user = await authService.registerUser(req.body)
+  res.send(user);
 });
 
 export default async function init(port){

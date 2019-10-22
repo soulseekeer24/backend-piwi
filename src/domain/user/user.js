@@ -1,8 +1,7 @@
-export default function User({ id, username, password, createdAt }) {
-        const user = { id, username, password, createdAt };
- 
+export default function User({ _id, username, password, createdAt }) {
+        const user = { _id, username, password, createdAt };
         return Object.freeze({
-            id: user.id,
+            _id: user._id,
             username: user.username,
             password: user.password,
             createdAt: user.createdAt

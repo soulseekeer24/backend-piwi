@@ -15,7 +15,7 @@ password: {
 },
     createdAt: { type: Date},
 
-});
+}, { _id: false });
 
 
 const UserRepository = mongoose.model('user', userSchema);
@@ -26,8 +26,12 @@ async function existByUsername(username){
  };
 
 async function persist(userToSave){
-     const userStored = await UserRepository.create(userToSave);
-    return userStored;
+    try {
+        const userStored = await UserRepository.create(userToSave);
+        return userStored;
+    } catch (error) {
+        throw error;
+    }
 };
  
 export default {existByUsername :existByUsername , persist: persist};

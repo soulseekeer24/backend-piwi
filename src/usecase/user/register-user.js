@@ -32,19 +32,18 @@ export default function makeRegisterUser({ idGenerator,  userRepository, passwor
             const encodedPassword = await passwordEncoder.encode(password);
       
             const newUser =  User({
-                id: await idGenerator.generateID(),
+                _id: await idGenerator.generateID(),
                 username: username,
                 password: encodedPassword,
                 createdAt: new Date()
             });
-
             const userStored = await userRepository.persist(newUser);
-            
+
             return Object.freeze(userStored);
 
         } catch (e) {
-            logger.error(e.message);
-            return { error: e };
+            logger.log(e.message);
+            return { error: e.message};
         }
     }
 }
