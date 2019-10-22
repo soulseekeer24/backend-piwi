@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import makeCreateUser from '../../src/domain/user/user';
+import User from '../../src/domain/user/user';
 
 describe('Create user function', () => {
     let CreateUser;
@@ -8,15 +8,8 @@ describe('Create user function', () => {
     const userTestPassword = 'testPassword';
     const creationDate = new Date();
     it('Should  create a user factory function', () => {
-        const userValidator = {
-            isValid: () => {
-                return true;
-            }
-        }
-        CreateUser = makeCreateUser({
-            userValidator: userValidator
-        });
-        assert.isFunction(CreateUser, 'factory created');
+    
+        assert.isFunction(User, 'factory created');
     });
 
     let userCreated;
@@ -29,7 +22,7 @@ describe('Create user function', () => {
             createdAt: creationDate
         };
 
-        userCreated = await CreateUser(user);
+        userCreated =  User(user);
         assert.isFrozen(userCreated, 'factory created');
     });
 

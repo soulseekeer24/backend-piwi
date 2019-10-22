@@ -7,11 +7,6 @@ import makeCreateUser from '../../src/domain/user/user';
 
 function setUp() {
 
-    const userValidator = {
-        isValid: () => {
-            return true;
-        }
-    }
     const jwtCreator = {
         generateToken: (user) => {
             return 'MySecretToken';
@@ -32,11 +27,8 @@ function setUp() {
         }
     }
 
-    const createUser = makeCreateUser({
-        userValidator: userValidator
-    });
+  
     return {
-        createUser: createUser,
         userRepository: userRepository,
         passwordEncoder: passwordEncoder,
         jwtCreator: jwtCreator,

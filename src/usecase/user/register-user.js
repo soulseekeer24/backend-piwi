@@ -1,12 +1,12 @@
 
-export default function makeRegisterUser({ idGenerator, User, userRepository, passwordEncoder, logger }) {
+import User from '../../domain/user/user'
+
+export default function makeRegisterUser({ idGenerator,  userRepository, passwordEncoder, logger }) {
 
     if (idGenerator == null || idGenerator == undefined) {
         throw new Error(`idGenerator is required`);
     }
-    if (User == null || User == undefined) {
-        throw new Error(`User function is required`);
-    }
+
     if (userRepository == null || userRepository == undefined) {
         throw new Error(`User Repository  is required`);
     }
@@ -30,15 +30,16 @@ export default function makeRegisterUser({ idGenerator, User, userRepository, pa
             }
 
             const encodedPassword = await passwordEncoder.encode(password);
-
-            const newUser = await User({
-                id: idGenerator.generateID(),
+      
+            const newUser =  User({
+                id: await idGenerator.generateID(),
                 username: username,
                 password: encodedPassword,
                 createdAt: new Date()
             });
 
             const userStored = await userRepository.persist(newUser);
+            
             return Object.freeze(userStored);
 
         } catch (e) {

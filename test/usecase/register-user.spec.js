@@ -7,11 +7,7 @@ import makeCreateUser from '../../src/domain/user/user';
 
 function setUp() {
 
-    const userValidator = {
-        isValid: () => {
-            return true;
-        }
-    }
+
     const idGenerator = {
         generateID: () => {
             return new Date();
@@ -26,18 +22,15 @@ function setUp() {
             return user;
         }
     }
+    
     const passwordEncoder = {
         encode: (password) => {
             return password + '-encoded';
         }
     }
 
-    const CreateUser = makeCreateUser({
-        userValidator: userValidator
-    });
     return {
         idGenerator: idGenerator,
-        User: CreateUser,
         userRepository: userRepository,
         passwordEncoder: passwordEncoder,
         logger: console
@@ -58,7 +51,7 @@ describe('Register User function', async () => {
         assert.isFrozen(userRegister);
     });
 
-    it('password should be undefined', () => {
+    it('password should be password123-encoded', () => {
         assert.equal(userRegister.password, 'password123-encoded');
     });
 

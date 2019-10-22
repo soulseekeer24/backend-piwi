@@ -1,10 +1,7 @@
 
-export default function makeLogInUser({ createUser, userRepository, passwordEncoder, jwtCreator, logger }) {
+export default function makeLogInUser({ userRepository, passwordEncoder, jwtCreator, logger }) {
 
 
-    if (createUser == null || createUser == undefined) {
-        throw new Error(`createUser function is required`);
-    }
     if (userRepository == null || userRepository == undefined) {
         throw new Error(`User Repository  is required`);
     }
