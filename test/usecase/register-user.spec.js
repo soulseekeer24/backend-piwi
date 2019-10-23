@@ -46,7 +46,7 @@ describe('Register User function', async () => {
     const userRegister = await registerUser({ username: `userForTesting`, password: `password123` });
 
     it('Should create a user object frozen', () => {
-        assert.isNotNull(userRegister);
+        assert.isObject(userRegister);
         assert.notTypeOf(userRegister, 'promise');
         assert.isFrozen(userRegister);
     });
@@ -56,7 +56,7 @@ describe('Register User function', async () => {
     });
 
     it('Should have user id', () => {
-        assert.isNotNull(userRegister.id);
+        assert.notEqual(userRegister._id, undefined);
     });
 
     it('Should have created at', () => {
@@ -64,7 +64,7 @@ describe('Register User function', async () => {
     });
 
     it('Should have username', () => {
-        assert.isNotNull(userRegister.username);
+        assert.isNotEmpty(userRegister.username);
     });
 
 });

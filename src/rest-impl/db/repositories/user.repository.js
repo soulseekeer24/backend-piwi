@@ -21,17 +21,15 @@ password: {
 const UserRepository = mongoose.model('user', userSchema);
 
 async function existByUsername(username){
-    const exist = await UserRepository.exists({username:username});
-     return exist;
+    return await UserRepository.exists({username:username});
  };
 
+ async function findByUsername(username){
+     return await UserRepository.findOne({username:username});
+ }
+
 async function persist(userToSave){
-    try {
-        const userStored = await UserRepository.create(userToSave);
-        return userStored;
-    } catch (error) {
-        throw error;
-    }
+        return await UserRepository.create(userToSave);
 };
  
-export default {existByUsername :existByUsername , persist: persist};
+export default {existByUsername :existByUsername , persist: persist , findByUsername:findByUsername};

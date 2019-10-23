@@ -10,10 +10,18 @@ app.post('/create-user', async function (req, res) {
   res.send(user);
 });
 
+
+
+app.post('/login', async function (req, res) {
+  const user = await authService.loginUser(req.body)
+  res.send(user);
+});
+
+
 export default async function init(port){
     await app.listen(port);
     console.log(`Listening on port ${port}`)
-
+  
 }
 
 

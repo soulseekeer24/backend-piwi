@@ -9,6 +9,10 @@ async function encode(password){
     return passwordEncrypted;
 }
 
+async function match(passwordInput, userDbPassword){
+    return  await bcrypt.compare(passwordInput, userDbPassword);
+}
 
 
-export default {encode:encode}
+
+export default {encode:encode, match:match}

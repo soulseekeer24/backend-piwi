@@ -38,7 +38,7 @@ export default function makeLogInUser({ userRepository, passwordEncoder, jwtCrea
             return jwt;
 
         } catch (e) {
-            logger.error(e.message);
+            logger.error(e.message, e);
             return { error: e };
         }
     }

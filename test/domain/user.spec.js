@@ -16,7 +16,7 @@ describe('Create user function', () => {
 
     it('Should create a User frozen', async () => {
         const user = {
-            id: userId,
+            _id: userId,
             username: userTestName,
             password: userTestPassword,
             createdAt: creationDate
@@ -38,8 +38,8 @@ describe('Create user function', () => {
         assert.equal(userCreated.password, userTestPassword);
     });
 
-    it(`User.id should be ${userId}`, () => {
-        assert.equal(userCreated.id, userId);
+    it(`User._id should be ${userId}`, () => {
+        assert.equal(userCreated._id, userId);
     });
 
     it(`User.createdAt should be ${creationDate}`, () => {
