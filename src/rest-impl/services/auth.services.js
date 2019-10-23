@@ -5,7 +5,7 @@ import morgan from 'morgan';
 
 //handlers
 import passwordEncoder from '../utils/password-encoder';
-import jwtCreator from '../utils/jwt-creator'
+import jwtCreator from '../utils/jwt-utils'
 //use cases
 import makeRegisterUser from '../../usecase/user/register-user';
 import makeLoginUser from '../../usecase/user/login-user';
